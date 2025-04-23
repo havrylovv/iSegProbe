@@ -1,0 +1,43 @@
+defaults:
+  - _self_
+  # modify hydra logging
+  - override hydra/job_logging: custom
+
+# Disable default saving of config
+hydra:  
+  output_subdir: null  
+  run:  
+    dir: .
+
+exp:
+  name: "exp_name_test"            # Optional name of the experiment. It will be added as a suffix to the experiment folder.
+  model_path: /path/to/model.py    # path to the model script from `models/` folder
+
+dataloader:
+  workers: 4
+  batch_size: 8 
+
+training_params:
+  epochs: 20
+  crop_size: [224, 224]
+  checkpoint_interval: [[0, 3], [15, 1]]   # Define how often save checkpoints: [[start_epoch, interval], ...]
+  lr_milestones: [17, 20]                  # Define how often to change the learning rate (in epochs)
+  do_validation: true
+  num_max_points: 24 
+
+training:
+  seed: 0                    # Set -1 to disable seeding
+  ngpus: 1                   # If you only specify `gpus` argument, the ngpus value will be calculated automatically. You should use either this argument or `gpus`.
+  gpus: ""                   # If not provided, this will be calculated automatically
+  resume_exp: null           # Path to the experiment to be resumed. If you use this field, you must specify the `resume-prefix` argument.
+  resume_prefix: "latest"    # The prefix of the name of the checkpoint to be loaded.
+  start_epoch: 0             # The number of the starting epoch from which training will continue (it is important for correct logging and learning rate).
+  weights: null              # Model weights will be loaded from the specified path if you use this argument.
+  local_rank: 0 
+  distributed: false         # Is overwrritten by the pipeline based on the number of GPUs, no need to change it, kept for hydra compatibility
+ 
+wandb: 
+  log_wandb: false           # If to log to wandb, other wandb params are used only if this is set to True
+  project: "iSegProbe-Train" 
+  name: ""                   # If not provided, this will be generated automatically 
+  dir: /path/to/logs         # Dir where wandb logs will be saved locally 

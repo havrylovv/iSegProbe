@@ -1,0 +1,28 @@
+matplotlib==3.3.4
+setuptools==52.0.0
+albumentations==0.5.2
+PyYAML==6.0
+easydict==1.9
+tensorboard==2.8.0
+opencv-python-headless==4.5.3.56
+albumentations==0.5.2
+mmcv==1.6.2
+timm==0.6.11
+Cython==0.29.32
+
+numpy==1.23.0
+protobuf==3.20.1
+opencv-python==4.4.0.46 
+einops==0.8.0
+wandb==0.18.0
+pycocotools==2.0.8
+hydra-core==1.3.2
+ipywidgets==8.1.5
+scikit-learn==1.5.2
+
+# MaskCLIP
+ftfy==6.2.3
+regex==2024.9.11
+
+# FeatUp 
+git+https://github.com/mhamilton723/FeatUp

@@ -1,0 +1,25 @@
+### Main config file ###
+
+# Paths to experiments folder (for saving) and models (latter is used during eval to enable relative imports)
+EXPS_PATH: "/path/to/experiments" 
+INTERACTIVE_MODELS_PATH: "./weights"  # path to trained interactive models, might be used for relative imports during evaluation, if not full path is provided
+
+DATASETS:
+  # Train datasets
+  SBD_PATH: "/path/to/sbd"
+
+  # Evaluation datasets
+  GRABCUT_PATH: "/path/to/grabcut"
+  BERKELEY_PATH: "/path/to/berkeley"
+  DAVIS_PATH: "/path/to/davis"
+  PARTIMAGENET_PATH: "/path/to/partimagenet"
+  COCO_MVAL_PATH: "/path/to/coco/val2017" 
+  PASCALVOC_PATH: "/path/to/pascalvoc"
+
+# Upsampler weights
+UPSAMPLERS:
+  LIFT: "/path/to/lift"
+  LOFTUP: "/path/to/loftup"
+
+# Weights of some pretrained models (optional)
+PRETRAINED_MODELS:

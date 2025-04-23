@@ -1,0 +1,32 @@
+default_language_version:
+  python: python3
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      - id: check-ast
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args:
+          - "--profile=black"
+
+  - repo: https://github.com/psf/black
+    rev: 24.10.0  
+    hooks:
+      - id: black
+        language_version: python3
+   
+  # uncomment to run spell checking (note: might be too strict)
+  # - repo: https://github.com/crate-ci/typos
+  #   rev: v1.22.9
+  #   hooks:
+  #   - id: typos
+  #     args: []  # This overrides the default args, meaning no changes will be written, only reported
+  #               # Othervise, it can change the variable names, leading to unintended consequences

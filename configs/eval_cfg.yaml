@@ -1,0 +1,59 @@
+defaults:
+  - _self_
+  # modify hydra logging
+  - override hydra/job_logging: custom
+
+# disable default saving of config
+hydra:  
+  output_subdir: null  
+  run:  
+    dir: .
+
+# Mode of evaluation
+mode: 'NoBRS'  # Choices: ['NoBRS', 'RGB-BRS', 'DistMap-BRS', 'f-BRS-A', 'f-BRS-B', 'f-BRS-C']
+               # Note that all experiments were performed with NoBRS mode. 
+
+# Checkpoint settings (select one of the two, exp_path is recommended to preserve proper folder structure)
+checkpoint: /path/to/checkpoint  # The path to the checkpoint. This can be a relative path (relative to cfg.INTERACTIVE_MODELS_PATH) or an absolute path. The file extension can be omitted.
+exp_path: ''    # The relative path to the experiment with checkpoints (relative to cfg.EXPS_PATH). The last checkpoint will be used. 
+                # For specifying concrete checkpoint, use <exp_path>:<checkpoint_number>, e.g. '/my/exp/path:000'.
+
+# Dataset settings
+datasets: 'GrabCut,Berkeley,SBD,DAVIS'  # List of datasets on which the model should be tested. Datasets are separated by a comma. 
+                                        # Possible choices: 'GrabCut', 'Berkeley', 'DAVIS', 'SBD', 'SA-1B'
+
+# Device settings
+gpus: '0'               # ID of used GPU.
+cpu: false              # Use only CPU for inference.
+
+# IoU threshold settings
+target_iou: 0.90        # Target IoU threshold for the NoC metric. (min possible value = 0.8)
+iou_analysis: false     # Saves pickle file with info about dataset and all IoUs. Could be used for further analysis. 
+
+# Evaluation settings
+n_clicks: 20            # Maximum number of clicks for the NoC metric.
+min_n_clicks: 1         # Minimum number of clicks for the evaluation.
+thresh: 0.5             # The segmentation mask is obtained from the probability outputs using this threshold.
+clicks_limit: null      # Limit on the number of clicks.
+eval_mode: 'fixed224'   # Choices: 'cvpr', 'fixed<number>', or 'fixed<number>,<number>' (e.g. 'fixed400', 'fixed400,600'), <number> corresponds to image resolution. 
+                        # NOTE: cvpr mode is currently not available as we do not perform pos_embedding interpolation and eval on original training resolution. 
+                        # All experiments were performed with fixed224 mode.
+eval_ritm: false        # Evaluate according to RITM paper: https://arxiv.org/abs/2102.06583 
+save_ious: false        # Save all IoUs as single pickle file.
+print_ious: true        # Print IoUs for each click in final evaluation table.
+vis_preds: false        # Visualize predictions as images for every image and every click and save them.
+
+save_feats: false                   # Save raw features and images with clicks for further visualization. 
+                                    # Next two parameters are used only if save_feats is set to True.
+save_feats_folder_name: 'features'  # The name of the folder where the features will be saved (inside of experiment folder).
+save_feats_for_n_imgs: 50           # Number of images for which to save the features.
+
+# Additional settings
+model_name: null                          # The model name that is used for making plots. Optional.
+main_cfg_path: './configs/main_cfg.yaml'  # The path to the main config file that contains paths to models and datasets. 
+logs_path: ''                             # The path to the evaluation logs folder. Default path: cfg.EXPS_PATH/evaluation_logs.
+
+wandb: false                      # If to log evaluation results to Weights & Biases. Next parameters are used only if wandb is set to True.
+wandb_project: 'iSegProbe-Eval'   # The name of the project in Weights & Biases.
+wandb_name: null                  # The name of the run in Weights & Biases. If null, the name will be generated automatically.
+wandb_dir: /path/to/logs          # The directory where the logs from Weights & Biases will be saved (locally).
