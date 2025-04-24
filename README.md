@@ -5,7 +5,7 @@
 </div>
 
 ## Introduction 
-This repository provides the code for the technical report [TODO](), and also serves as a standalone suite for probing and evaluating future methods in interactive segmentation (IS).
+This repository provides the code for the technical report (to be released soon), and also serves as a standalone suite for probing and evaluating future methods in interactive segmentation (IS).
 
 The `iSegProbe` repository includes:
 - Pipelines for training and evaluating interactive segmentation models, specifically adapted for probing individual model components (`train.py`, `evaluate.py`)
@@ -17,7 +17,6 @@ The `iSegProbe` repository includes:
 ## Contents
 <!--ts-->
    * [Installation](#installation)
-   * [Training](#training)
    * [Evaluation](#evaluation)
    * [Interactive Demo](#interactive-demo)
    * [Plotting Utilities ](#plotting-utilities)
@@ -75,8 +74,12 @@ Download upsampler weights and specify the corresponding paths in the `configs/m
 
 > For additional trained upsamplers, refer to the LoftUp repository:  [[link](https://github.com/andrehuang/loftup)] 
 
-## Training
-General training configurations are specified in `configs/train_cfg.yaml`. For a detailed explanation of the parameters, please refer directly to that file. Each model should be defined in a separate file, which is then referenced from `train_cfg.yaml`. Examples of such model configuration files can be found in the `models/` directory.
+## Evaluation
+
+Evaluation of the vision foundation model (and feature upsampler) involves two separate stages: (1) training the interactive segmentation model, and (2) performing the actual evaluation.
+
+### Train Your IS Model
+General training configurations are specified in `configs/train_cfg.yaml`. For a detailed explanation of the parameters, please refer directly to that file. Each training experiment (containing IS model, datasets and other components) should be defined in a separate Python file, which is then referenced from `train_cfg.yaml`. Examples of such files can be found in the `models/` directory.
 
 To launch the training process, you can either modify `train_cfg.yaml` accordingly and run:
 ```bash 
@@ -87,17 +90,7 @@ Or override specific arguments directly with CLI using Hydra syntax, for example
 python train.py +exp.name=my_name +exp.model_path=/path/to/my/model
 ```
 
-### Logging
-- Training logs can be visualized using **TensorBoard** and **Weights & Biases**.
-#### TensorBoard
-To enable TensorBoard, locate folders with experiments output (could be also some root folder containing multiple runs) and run: 
-```python
-tensorboard --logdir=PATH_TO_LOG_DIR --port=6006
-```
-#### **Weights & Biases**
-To enable logging to W&B, set the `wandb.log_wandb=true` in `train_cfg.yaml`.
-
-## Evaluation 
+### Evaluate Your IS Model
 General evaluation configurations are specified in `configs/eval_cfg.yaml`. For a detailed explanation of the parameters, please refer directly to that file. 
 
 To launch the evaluation process, you can either modify `eval_cfg.yaml` accordingly and run:
@@ -108,7 +101,18 @@ Or override specific arguments directly with CLI using Hydra syntax, for example
 ```python
 python evaluate.py +checkpoint=/path/to/checkpoints +datasets=GrabCut,Berkeley,SBD,DAVIS
 ```
-- Additionally, separate **Weights & Biases** evaluation logging is available by setting `wandb=true` in `eval_cfg.yaml`.
+
+### Logging
+- Training logs can be visualized using **TensorBoard** and **Weights & Biases**.
+  #### TensorBoard
+  To enable TensorBoard, locate folders with experiments output (could be also some root folder containing multiple runs) and run: 
+  ```python
+  tensorboard --logdir=PATH_TO_LOG_DIR --port=6006
+  ```
+  #### **Weights & Biases**
+  To enable logging to W&B, set the `wandb.log_wandb=true` in `train_cfg.yaml`.
+
+- Separate **Weights & Biases** evaluation logging is available by setting `wandb=true` in `eval_cfg.yaml`.
 
 ## Interactive Demo 
 
@@ -164,4 +168,4 @@ If you find this repository useful, please cite our papers:
 ```
 
 ## Acknowledgements
-This repository is based on [SimpleClick](https://github.com/uncbiag/SimpleClick) and [RITM](https://github.com/SamsungLabs/ritm_interactive_segmentation), with most of the featurizer code adapted from [FeatUp](https://github.com/mhamilton723/FeatUp). We thank the authors of these open-source projects for their valuable contributions.
+This repository is based on [SimpleClick](https://github.com/uncbiag/SimpleClick) and [RITM](https://github.com/SamsungLabs/ritm_interactive_segmentation), with most of the featurizers code adapted from [FeatUp](https://github.com/mhamilton723/FeatUp). We thank the authors of these open-source projects for their valuable contributions.
