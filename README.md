@@ -5,7 +5,7 @@
 </div>
 
 ## Introduction 
-This repository provides the code for the technical report (to be released soon), and also serves as a standalone suite for probing and evaluating future methods in interactive segmentation (IS).
+This repository provides the code for the technical report [[Arxiv]](https://arxiv.org/abs/2505.02075), and also serves as a standalone suite for probing and evaluating future methods in interactive segmentation (IS).
 
 The `iSegProbe` repository includes:
 - Pipelines for training and evaluating interactive segmentation models, specifically adapted for probing individual model components (`train.py`, `evaluate.py`)
@@ -164,6 +164,16 @@ If you find this repository useful, please cite our papers:
       archivePrefix={arXiv},
       primaryClass={cs.CV},
       url={https://arxiv.org/abs/2504.14032}, 
+}
+
+@misc{havrylov2025benchmarking,
+    title={Benchmarking Feature Upsampling Methods for Vision Foundation Models using Interactive Segmentation},
+    author={Volodymyr Havrylov and Haiwen Huang and Dan Zhang and Andreas Geiger},
+    year={2025},
+    eprint={2505.02075},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/2505.02075}, 
 }
 ```
 
